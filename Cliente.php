@@ -40,7 +40,5 @@ public function __toString(){
     "Documento: ". $this->numDocumento ."\n";
     "Dado de baja: ". ($this->dadoDeBaja ? "Si" : "No") ."\n";
 }
-
-
 }
 ?>
