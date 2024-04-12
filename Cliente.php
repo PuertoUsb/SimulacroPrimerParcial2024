@@ -43,5 +43,4 @@ public function __toString(){
 
 
 }
-echo "HOlaaa";
 ?>
