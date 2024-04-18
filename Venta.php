@@ -2,16 +2,16 @@
 class Venta{
     private $num;
     private $fecha;
-    private $referenciaCliente;
-    private $refColeccionMotos;
+    private $objCliente;
+    private $objColeccionMotos;
     private $precioFinal;
 
     // Cosntructor de la clase venta
-    public function __construct($num, $fecha, $referenciaCliente, $precioFinal,){
+    public function __construct($num, $fecha, $objCliente, $objColeccionMotos, $precioFinal,){
         $this->num = $num;
         $this->fecha = $fecha;
-        $this->referenciaCliente = $referenciaCliente;
-        $this->refColeccionMotos = array();
+        $this->objCliente = $objCliente;
+        $this->objColeccionMotos = array();
         $this->precioFinal = $precioFinal;
     }
 
@@ -23,42 +23,84 @@ class Venta{
     public function getFecha(){
         return $this->fecha;
     }   
-    public function getReferenciaCliente(){
-        return $this->referenciaCliente;
+    public function getObjCliente(){
+        return $this->objCliente;
     }
-    public function getRefColeccionMotos(){
-        return $this->refColeccionMotos;
+    public function getObjColeccionMotos(){
+        return $this->objColeccionMotos;
     }
     public function getPrecioFinal(){
         return $this->precioFinal;
     }
 
-    // Metodo ToString para retornar la informacion de los atributos en forma de cadena de caracteres
+    // Setters
+    public function setNum($num) {
+        $this->num = $num;
+    }
+
+    public function setFecha($fecha) {
+        $this->fecha = $fecha;
+    }
+
+    public function setObjCliente($objCliente) {
+        $this->objCliente = $objCliente;
+    }
+
+    public function setObjColeccionMotos($objColeccionMotos) {
+        $this->objColeccionMotos = $objColeccionMotos;
+    }
+
+    public function setPrecioFinal($precioFinal) {
+        $this->precioFinal = $precioFinal;
+    }
+
+    /** Metodo ToString para retornar la informacion de los atributos en forma de cadena de caracteres
+     * @return string
+    */
     public function __toString(){
     return
-    $infoMotos = "";
-    foreach ($this-> refColeccionMotos as $motos) {
-        $infoMotos = $motos -> __toString(). "\n";
+    $cadena = "============   VENTA   ============";
+    
+    $cadena .="Numero de venta: ". $this->getNum() ."\n";
+    $cadena .="Fecha: ". $this->getFecha() ."\n";
+    $cadena .="Cliente: ". $this->getObjCliente() ."\n";
+    $cadena .="Coleccion de motos:---> ". $this->colMotosString() ."\n";
+    $cadena .="Precio final: $". $this->getPrecioFinal() ."\n";
+    return $cadena;
     }
-    return 
-    "Numero de venta: ". $this->num ."\n";
-    "Fecha: ". $this->fecha ."\n";
-    "Cliente: ". $this->referenciaCliente ."\n";
-    "Motos vendidas; ". $infoMotos;
-    "Precio final: $". $this->precioFinal ."\n";
+
+    /** Metodo que me retorna en tipo string toda la objColeccionMotos
+     * @return string
+     */
+    public function colMotosString(){
+        //$infoM array
+        //$cadenaC string
+        $cadena = "";
+        $infoM = $this->getObjColeccionMotos();
+
+        for($i = 0 ; $i < count($infoM); $i++){
+            $cadena .= "Moto n°: ". $i . "\n". $infoM[$i]. "\n";
+        }
+        return $cadena;
+
     }
 
     // Metodo que incorpora un objeto moto a la coleccion de motos de la venta, siempre y cuando sea posible la venta
     public function incorporarMoto($objMoto){
-        $incorporado = false;
-        if ($objMoto->activa === true){
-            $this->refColeccionMotos[] = $objMoto;
-            $this->precioFinal += $objMoto->darPrecioVenta();
-            $incorporado = true;
+        //$colMotosCopia array
+        //$precioMoto, $precioFinalCopia float
+
+        if ($objMoto->getActiva()){
+            $colMotosCopia = $this->getObjColeccionMotos();
+            array_push($colMotosCopia, $objMoto);
+            $this->setObjcoleccionMotos($colMotosCopia);
+
+            $precioMoto = $objMoto->darPrecioVEnta();
+            $precioFinalCopia = $this->getPrecioFinal();
+            $precioFinalCopia += $precioMoto;
+            $this->setPrecioFinal($precioFinalCopia);
         }
-        return $incorporado;
     }
 }
-
 
 ?>

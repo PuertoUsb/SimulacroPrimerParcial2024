@@ -37,30 +37,60 @@ public function getActiva(){
     return $this->activa;
 }
 
+// Setters
+public function setCodigo($codigo) {
+    $this->codigo = $codigo;
+}
+
+public function setCosto($costo) {
+    $this->costo = $costo;
+}
+
+public function setAnioFabricacion($anioFabricacion) {
+    $this->anioFabricacion = $anioFabricacion;
+}
+
+public function setDescripcion($descripcion) {
+    $this->descripcion = $descripcion;
+}
+
+public function setIncrementoAnual($incrementoAnual) {
+    $this->incrementoAnual = $incrementoAnual;
+}
+
+public function setActiva($activa) {
+    $this->activa = $activa;
+}
+
 // Metodo que informa en "cadena de caracteres" los atributos de la clase
 public function __toString(){
-    return 
-    "Codigo: ". $this->codigo ."\n";
-    "Costo: $". $this->costo ."\n";
-    "Año de fabricacion: ". $this->anioFabricacion ."\n";
-    "Descripcion: ". $this->descripcion ."\n";
-    "Porcentaje de incremento anual: ".$this->incrementoAnual . "%" . "\n";
-    "Activa: ". ($this->activa ? "Si" : "No") ."\n";
+    
+    $cadena = "";
+    $cadena .="Codigo: ". $this->getCodigo() ."\n";
+    $cadena .="Costo: $". $this->getCosto() ."\n";
+    $cadena .="Año de fabricacion: ". $this->getAnioFabricacion() ."\n";
+    $cadena .="Descripcion: ". $this->getDescripcion() ."\n";
+    $cadena .="Porcentaje de incremento anual: ".$this->getIncrementoAnual() . "%" . "\n";
+    $cadena .="Activa: ". $this->getActiva() ."\n";
+
+    return $cadena ;
+
 }
 
 // Metodo que calcula el valor de la moto. Si la moto no se encuentra disponible para la venta retorna un valor 
 // < 0. Si la moto está disponible para la venta, el método realiza el siguiente cálculo
 //Retorta float
 public function darPrecioVenta(){
-    if (!$this->activa){
+    //$precioVenta float
+    //$anioTranscurrido int
+    // 
+    if ($this->getActiva() == false){
         $precioVenta = -1;
     } else {
-        $precioVenta = $this->costo + $this->costo * ($this->anioFabricacion * $this->incrementoAnual);
+        $anioTranscurrido = date("y") - $this->getAnioFabricacion();
+        $precioVenta = $this->getCosto() + ($this->getCosto() * ($anioTranscurrido * $this->getIncrementoAnual()));
     }
     return $precioVenta;
 }
-
 }
-
-
 ?>

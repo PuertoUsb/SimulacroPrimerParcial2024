@@ -1,13 +1,13 @@
 <?php
 class Empresa{
-    private $denominacion;
-    private $direccion;
+    private $denominacion; 
+    private $direccion; //string
     private $coleccionClientes; //array
     private $coleccionMotos; //array
     private $coleccionVentas; //array
 
     //constructor de los atributos de la clase empresa
-    public function __construct($denominacion, $direccion){
+    public function __construct($denominacion, $direccion, $coleccionClientes, $colCodigosMoto, $coleccionVentas){
         $this->denominacion = $denominacion;
         $this->direccion = $direccion;
         $this->coleccionClientes = array();
@@ -15,6 +15,7 @@ class Empresa{
         $this->coleccionVentas = array();
     }
 
+    //Getters
     public function getDenominacion(){
         return $this->denominacion;
     }
@@ -29,6 +30,26 @@ class Empresa{
     }
     public function getColeccionVentas(){
         return $this->coleccionVentas;
+    }
+    //Setters
+    public function setDenominacion($denominacion){
+        $this->denominacion = $denominacion;
+    }
+
+    public function setDireccion($direccion){
+        $this->direccion = $direccion;
+    }
+
+    public function setColeccionClientes($coleccionClientes){
+        $this->coleccionClientes = $coleccionClientes;
+    }
+
+    public function setColeccionMotos($coleccionMotos){
+        $this->coleccionMotos = $coleccionMotos;
+    }
+
+    public function setColeccionVentas($coleccionVentas){
+        $this->coleccionVentas = $coleccionVentas;
     }
 
 // Metodo para que retorne la informacion de los atributos de la clase
@@ -45,13 +66,13 @@ $infoMotos = "";
 foreach ($this->coleccionMotos as $infoM) {
     $infoMotos .= $infoM -> __toString(). "\n";
 }
-
-return
-    "Denominacion: " . $this->denominacion . "\n";
-    "Direccion: ". $this->direccion ."\n";
-    "Informacion de clientes: ". $infoClientes;
-    "Informacion de motos: ". $infoM. "\n";
-    "Informacion de ventas: ". $infoVenta."\n";
+    $info = "";
+    $info .= "Denominacion: " . $this->denominacion . "\n";
+    $info .="Direccion: ". $this->direccion ."\n";
+    $info .="Informacion de clientes: ". $infoClientes;
+    $info .="Informacion de motos: ". $infoM. "\n";
+    $info .="Informacion de ventas: ". $infoVenta."\n";
+    return $info;
 }
 
 /** Recorre la colección de motos de la Empresa y retorna la referencia al objeto moto cuyo código coincide con el recibido por parámetro.
@@ -59,14 +80,19 @@ return
  * @return 
  */
 public function retornarMoto($codigoMoto){
+    //$objReferencia moto
+    //$motoEncontrada bool
+    //$colMotosCopia array
+    //$i int
+
     $objReferencia = null;
-    $n = count($this->coleccionMotos);
+    $motoEncontrada = false;
+    $colMotosCopia = $this->getColeccionMotos();
     $i = 0;
-    while ($i < $n) {
-        $motoActual = $this->coleccionMotos[$i];
-        
-        if ($motoActual->getCodigo() == $codigoMoto ){
-        $objReferencia = $motoActual;
+    while ($i < count($colMotosCopia) && !$motoEncontrada ) {
+        if ($colMotosCopia[$i]-> getCodigo() == $codigoMoto){
+            $motoEncontrada = true;
+            $objReferencia = $colMotosCopia[$i];
         }
         $i++ ;
     }
@@ -78,24 +104,37 @@ public function retornarMoto($codigoMoto){
  *se busca el objeto moto correspondiente al código y se incorpora a la colección de motos de la instancia
  *venta que debe ser creada.
  * @param array $colCodigosMoto
- * @param string $objCliente
+ * @param Cliente $objCliente
  * @return float
 */
 public function registrarVenta($colCodigosMoto, $objCliente){
+    $importFinal = 0;
 
     // intancia creada para inicialicar la clase y utilizarla en el metodo retornarMoto
-    $venta = new Venta(001, 2024, $objCliente, 250000);
+    
 
+if ($objCliente->getEstado() == "alta"){
+    $motosAVender = [];
+    $colMotos = $this->getColeccionMotos();
+}
+foreach ($colCodigosMoto as $unCodigoMoto) {
+    $unObjMoto = $this->retornarMoto($unCodigoMoto);
 
-foreach ($colCodigosMoto as $codigo) {
-    $moto = $this->retornarMoto($codigo);
-    if ($moto !== null && $moto->getActiva()){
-        $venta->incorporarMoto($moto);
+    if ($unObjMoto !== null && $unObjMoto->getActiva()){
+        array_push($motosAVender, $unObjMoto);
+        $importFinal += $unObjMoto->darPrecioVenta();
     }
 }
-$this->coleccionVentas[] = $venta;
-return $venta->getPrecioFinal();
+if (count($motosAVender) > 0){ // encontre motos a vender
+    $copiaColVentas = $this->getColeccionVentas();
+    $idVentas = count($copiaColVentas) + 1;
+
+
 }
+$venta = new Venta(count($this->getColeccionVentas()), date("m/d/y"), $objCliente, $motosAVender, 0);
+
+}
+
 /** Metodo que registra al cliente con todas sus compras
  * @param $tipo
  * @param int $numDoc
@@ -117,5 +156,6 @@ public function retortornarXCliente($tipo, $numDoc){
     return $ventasClientes;
 }
 }
+
 
 ?>
