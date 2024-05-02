@@ -1,8 +1,8 @@
 <?php 
-include_once("Cliente.php");
-include_once("Venta.php");
-include_once("Moto.php");
-include_once("Empresa.php");
+include("Cliente.php");
+include("Venta.php");
+include("Moto.php");
+include("Empresa.php");
 
 function mostrarDatosColeccion($unaColeccion){
     echo "### VENTAS ###". "\n";
@@ -22,7 +22,7 @@ $objMoto2 = new Moto(12, 584000, 2021, "Zanela Zr 150 Ohc", 70, true );
 $objMoto3 = new Moto(13, 999900, 2023, "Zanella Patagonia Eagle 250", 55, false);
 
 //Objetos empresa 3
-$colMotos = [$objCliente1, $objMoto2, $objMoto3];
+$colMotos = [$objMoto1, $objMoto2, $objMoto3];
 $colClientes = [$objCliente1, $objCliente2];
 $objEmpresa1 = new Empresa("Alta gama", "Av Argentina 123", $colClientes, $colMotos, []);
 
@@ -38,54 +38,55 @@ $resp = $objEmpresa1->registrarVenta([11, 12, 13],$objCliente2);
 echo "==================================================\n";
 echo "==================   PUNTO 5   ===================\n" ;
 echo "==================================================\n";
-echo $resp . "\n";
-echo $objEmpresa1. "\n";
-echo "\n";
+if ($resp > 0 ){
+    echo "La venta pudo realizarse, el importe TOTAL es de: ". $resp. "\n";
+    echo $objEmpresa1;
+} else{
+    echo"La venta NO pudo realizarse, quizas el cliente o los codigos no se encuentan activos"."\n";
+}
 
 // 6
 $resp = $objEmpresa1->registrarVenta([0], $objCliente2);
 echo "==================================================\n";
 echo "==================   PUNTO 6   ===================\n" ;
 echo "==================================================\n";
-echo $objEmpresa1;
+if ($resp > 0 ){
+    echo "La venta pudo realizarse, el importe TOTAL es de: ". $resp. "\n";
+} else{
+    echo"La venta NO pudo realizarse, quizas el cliente o los codigos no se encuentan activos"."\n";
+}
+echo"\n";
 
 // 7
 $resp = $objEmpresa1->registrarVenta([2], $objCliente2);
 echo "==================================================\n";
 echo "==================   PUNTO 7   ===================\n" ;
 echo "==================================================\n";
-echo $resp;
+if ($resp > 0 ){
+    echo "La venta pudo realizarse, el importe TOTAL es de: ". $resp. "\n";
+}else{
+    echo"La venta NO pudo realizarse, quizas el cliente o los codigos no se encuentan activos"."\n";
+}
 
 // 8
-$respcolVentas1 = $objEmpresa1-> retortornarXCliente("dni", "1122");
+$respcolVentas = $objEmpresa1-> retortornarXCliente("dni", 43123456);
+echo "\n";
 echo "==================================================\n";
 echo "==================   PUNTO 8   ===================\n" ;
 echo "==================================================\n";
-mostrarDatosColeccion($respcolVentas1);
+mostrarDatosColeccion($respcolVentas);
 // 9 
-$respcolVentas2 = $objEmpresa1-> retortornarXCliente("dni", "1142");
+$respcolVentas = $objEmpresa1-> retortornarXCliente("dni", 44789456);
+echo "\n";
 echo "==================================================\n";
 echo "==================   PUNTO 9   ===================\n" ;
 echo "==================================================\n";
-mostrarDatosColeccion($respcolVentas2);
+echo mostrarDatosColeccion($respcolVentas);
 
 // 10
 echo "==================================================\n";
 echo "==================   PUNTO 10   ===================\n" ;
 echo "==================================================\n";
 echo $objEmpresa1;
-// 9 
-
-
-
-
-
-
-
-
-
-
-//
-
 
 ?>

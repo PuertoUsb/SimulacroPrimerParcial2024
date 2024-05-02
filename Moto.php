@@ -15,9 +15,9 @@ public function __construct($codigo, $costo, $anioFabricacion, $descripcion, $in
     $this->descripcion = $descripcion;
     $this->incrementoAnual = $incrementoAnual;
     $this->activa = $activa;
-
-// Getters
 }
+// Getters
+
 public function getCodigo(){
     return $this->codigo;
 }
@@ -87,10 +87,11 @@ public function darPrecioVenta(){
     if ($this->getActiva() == false){
         $precioVenta = -1;
     } else {
-        $anioTranscurrido = date("y") - $this->getAnioFabricacion();
-        $precioVenta = $this->getCosto() + ($this->getCosto() * ($anioTranscurrido * $this->getIncrementoAnual()));
+        $costoBase = $this->getCosto();
+        $anioTranscurrido = date("Y") - $this->getAnioFabricacion();
+        $precioVenta = $costoBase + ($costoBase * ($anioTranscurrido * $this->getIncrementoAnual()));
     }
-    return $precioVenta;
-}
+        return $precioVenta;
+    }
 }
 ?>

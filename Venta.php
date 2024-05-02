@@ -58,8 +58,7 @@ class Venta{
      * @return string
     */
     public function __toString(){
-    return
-    $cadena = "============   VENTA". $this->getNum()  . "============";
+    $cadena = "============   VENTA ". $this->getNum()  . " ============". "\n";
     
     $cadena = $cadena. "Numero: ". $this->getNum() ."\n";
     $cadena = $cadena. "Fecha: ". $this->getFecha() ."\n";
@@ -68,7 +67,7 @@ class Venta{
     $cadena = $cadena. "Precio final: $". $this->getPrecioFinal() ."\n";
     return $cadena;
     }
- 
+
     /** Metodo que me retorna en tipo string toda la objColeccionMotos
      * @return string
      */
@@ -95,9 +94,9 @@ class Venta{
             array_push($colMotosCopia, $objMoto);
             $this->setObjcoleccionMotos($colMotosCopia);
 
-            $precioMoto = $objMoto->darPrecioVEnta();
+            $precioMoto = $objMoto->darPrecioVenta();
             $precioFinalCopia = $this->getPrecioFinal();
-            $precioFinalCopia += $precioMoto;
+            $precioFinalCopia = $precioFinalCopia + $precioMoto;
             $this->setPrecioFinal($precioFinalCopia);
         }
     }
