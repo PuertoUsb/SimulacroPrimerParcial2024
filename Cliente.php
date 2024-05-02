@@ -57,12 +57,11 @@ public function setNumDocumento($numDocumento) {
  *  @return string
  */
 public function __toString(){
-    $cadena = "";
-    $cadena .= "Nombre: " . $this->getNombre(). "\n";  
-    $cadena .="Apellido: ". $this->getApellido() . "\n";
-    $cadena .="Tipo de documento: ". $this->getTipoDocumento() ."\n";
-    $cadena .="Documento: ". $this->getNumDocumento() ."\n";
-    $cadena .="Dado de baja: ". ($this->getEstado() ? "Si" : "No") ."\n";
+    $cadena = "Nombre: " . $this->getNombre(). "\n";  
+    $cadena = $cadena. "Apellido: ". $this->getApellido() . "\n";
+    $cadena = $cadena. "Tipo de documento: ". $this->getTipoDocumento() ."\n";
+    $cadena = $cadena. "Documento: ". $this->getNumDocumento() ."\n";
+    $cadena = $cadena. "Estado: ". $this->getEstado() ."\n";
 
     return $cadena;
 }

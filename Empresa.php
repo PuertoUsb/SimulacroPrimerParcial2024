@@ -59,7 +59,7 @@ class Empresa{
 private function retornarCadenaDesdeColeccion($coleccion){
     $cadena = "";
     foreach ($coleccion as $unElemntoCol) {
-        $cadena .= "  " . $unElemntoCol . "\n";
+        $cadena = $cadena. "  " . $unElemntoCol . "\n";
     }
     return $cadena;
 }
@@ -69,15 +69,15 @@ private function retornarCadenaDesdeColeccion($coleccion){
 public function __toString(){
     //$cadena string
     $cadena = "Denominacion: " . $this->getDenominacion() . "\n";
-    $cadena .="Direccion: ". $this->getDireccion() ."\n";
+    $cadena = $cadena. "Direccion: ". $this->getDireccion() ."\n";
 
-    $cadena .="************  Informacion de clientes  ************ \n"
+    $cadena = $cadena. "************  Informacion de clientes  ************ \n"
     . $this->retornarCadenaDesdeColeccion($this->getColeccionClientes()). "\n";
 
-    $cadena .= "************  Coleccion de motos  ************ \n"
+    $cadena = $cadena. "************  Coleccion de motos  ************ \n"
     . $this->retornarCadenaDesdeColeccion($this->getColeccionMotos()). "\n";
 
-    $cadena .="************  Coleccion de ventas  ************ \n"
+    $cadena = $cadena. "************  Coleccion de ventas  ************ \n"
     . $this->retornarCadenaDesdeColeccion($this->getColeccionVentas()). "\n";
 
     return $cadena;
@@ -124,7 +124,7 @@ public function registrarVenta($colCodigosMoto, $objCliente){
     //$idVentas int
     //$NuevaVenta intacia de venta
 
-    $importFinal = 0;
+    $importeFinal = 0;
     
 if ($objCliente->getEstado() == "alta"){
 
@@ -133,18 +133,19 @@ if ($objCliente->getEstado() == "alta"){
     $idVentas = count($copiaColVentas) + 1;
     // ($numero, $fecha, $cliente, $colMotos, $precioFinal)
     $nuevaVenta = new Venta($idVentas, date("m/d/y"), $objCliente, $motosAVender, 0);
-    $colMotos = $this->getColeccionMotos();
+
 
 }
 foreach ($colCodigosMoto as $unCodigoMoto) {
     $unObjMoto = $this->retornarMoto($unCodigoMoto);
 
-    if ($unObjMoto !== null){
+    if ($unObjMoto != null){
         //Por cada moto encontrada y activa
     $nuevaVenta->incorporarMoto($unObjMoto);
     }
 }
-if (count($nuevaVenta->getObjColeccionMotos()) > 0){ // encontre motos a vender
+
+if (count($nuevaVenta->getObjColeccionMotos()) > 0 ){ // encontre motos a vender
     array_push($copiaColVentas, $nuevaVenta);
     $this->setColeccionVentas($copiaColVentas); //Actualiza la coleccion ventas
     $importeFinal = $nuevaVenta->getPrecioFinal();

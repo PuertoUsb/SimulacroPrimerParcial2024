@@ -66,12 +66,12 @@ public function setActiva($activa) {
 public function __toString(){
     
     $cadena = "";
-    $cadena .="Codigo: ". $this->getCodigo() ."\n";
-    $cadena .="Costo: $". $this->getCosto() ."\n";
-    $cadena .="Año de fabricacion: ". $this->getAnioFabricacion() ."\n";
-    $cadena .="Descripcion: ". $this->getDescripcion() ."\n";
-    $cadena .="Porcentaje de incremento anual: ".$this->getIncrementoAnual() . "%" . "\n";
-    $cadena .="Activa: ". $this->getActiva() ."\n";
+    $cadena = $cadena. "Codigo: ". $this->getCodigo() ."\n";
+    $cadena = $cadena. "Costo: $". $this->getCosto() ."\n";
+    $cadena = $cadena. "Año de fabricacion: ". $this->getAnioFabricacion() ."\n";
+    $cadena = $cadena. "Descripcion: ". $this->getDescripcion() ."\n";
+    $cadena = $cadena. "Porcentaje de incremento anual: ".$this->getIncrementoAnual() . "%" . "\n";
+    $cadena = $cadena. "Activa: ". $this->getActiva() ."\n";
 
     return $cadena ;
 
