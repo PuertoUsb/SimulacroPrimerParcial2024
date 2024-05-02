@@ -15,9 +15,9 @@ public function __construct($codigo, $costo, $anioFabricacion, $descripcion, $in
     $this->descripcion = $descripcion;
     $this->incrementoAnual = $incrementoAnual;
     $this->activa = $activa;
-
-// Getters
 }
+// Getters
+
 public function getCodigo(){
     return $this->codigo;
 }
@@ -66,12 +66,12 @@ public function setActiva($activa) {
 public function __toString(){
     
     $cadena = "";
-    $cadena .="Codigo: ". $this->getCodigo() ."\n";
-    $cadena .="Costo: $". $this->getCosto() ."\n";
-    $cadena .="Año de fabricacion: ". $this->getAnioFabricacion() ."\n";
-    $cadena .="Descripcion: ". $this->getDescripcion() ."\n";
-    $cadena .="Porcentaje de incremento anual: ".$this->getIncrementoAnual() . "%" . "\n";
-    $cadena .="Activa: ". $this->getActiva() ."\n";
+    $cadena = $cadena. "Codigo: ". $this->getCodigo() ."\n";
+    $cadena = $cadena. "Costo: $". $this->getCosto() ."\n";
+    $cadena = $cadena. "Año de fabricacion: ". $this->getAnioFabricacion() ."\n";
+    $cadena = $cadena. "Descripcion: ". $this->getDescripcion() ."\n";
+    $cadena = $cadena. "Porcentaje de incremento anual: ".$this->getIncrementoAnual() . "%" . "\n";
+    $cadena = $cadena. "Activa: ". $this->getActiva() ."\n";
 
     return $cadena ;
 
@@ -87,10 +87,11 @@ public function darPrecioVenta(){
     if ($this->getActiva() == false){
         $precioVenta = -1;
     } else {
-        $anioTranscurrido = date("y") - $this->getAnioFabricacion();
-        $precioVenta = $this->getCosto() + ($this->getCosto() * ($anioTranscurrido * $this->getIncrementoAnual()));
+        $costoBase = $this->getCosto();
+        $anioTranscurrido = date("Y") - $this->getAnioFabricacion();
+        $precioVenta = $costoBase + ($costoBase * ($anioTranscurrido * $this->getIncrementoAnual()));
     }
-    return $precioVenta;
-}
+        return $precioVenta;
+    }
 }
 ?>

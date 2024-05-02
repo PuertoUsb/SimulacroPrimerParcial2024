@@ -7,11 +7,11 @@ class Venta{
     private $precioFinal;
 
     // Cosntructor de la clase venta
-    public function __construct($num, $fecha, $objCliente, $objColeccionMotos, $precioFinal,){
+    public function __construct($num, $fecha, $objCliente, $objColeccionMotos, $precioFinal){
         $this->num = $num;
         $this->fecha = $fecha;
         $this->objCliente = $objCliente;
-        $this->objColeccionMotos = array();
+        $this->objColeccionMotos = $objColeccionMotos;
         $this->precioFinal = $precioFinal;
     }
 
@@ -58,14 +58,13 @@ class Venta{
      * @return string
     */
     public function __toString(){
-    return
-    $cadena = "============   VENTA   ============";
+    $cadena = "============   VENTA ". $this->getNum()  . " ============". "\n";
     
-    $cadena .="Numero de venta: ". $this->getNum() ."\n";
-    $cadena .="Fecha: ". $this->getFecha() ."\n";
-    $cadena .="Cliente: ". $this->getObjCliente() ."\n";
-    $cadena .="Coleccion de motos:---> ". $this->colMotosString() ."\n";
-    $cadena .="Precio final: $". $this->getPrecioFinal() ."\n";
+    $cadena = $cadena. "Numero: ". $this->getNum() ."\n";
+    $cadena = $cadena. "Fecha: ". $this->getFecha() ."\n";
+    $cadena = $cadena. "Cliente: ". $this->getObjCliente() ."\n";
+    $cadena = $cadena. "Coleccion de motos:---> ". $this->colMotosString() ."\n";
+    $cadena = $cadena. "Precio final: $". $this->getPrecioFinal() ."\n";
     return $cadena;
     }
 
@@ -74,12 +73,12 @@ class Venta{
      */
     public function colMotosString(){
         //$infoM array
-        //$cadenaC string
+        //$cadena string
         $cadena = "";
         $infoM = $this->getObjColeccionMotos();
 
         for($i = 0 ; $i < count($infoM); $i++){
-            $cadena .= "Moto n°: ". $i . "\n". $infoM[$i]. "\n";
+            $cadena = $cadena. "Moto n°: ". $i . "\n". $infoM[$i]. "\n";
         }
         return $cadena;
 
@@ -95,9 +94,9 @@ class Venta{
             array_push($colMotosCopia, $objMoto);
             $this->setObjcoleccionMotos($colMotosCopia);
 
-            $precioMoto = $objMoto->darPrecioVEnta();
+            $precioMoto = $objMoto->darPrecioVenta();
             $precioFinalCopia = $this->getPrecioFinal();
-            $precioFinalCopia += $precioMoto;
+            $precioFinalCopia = $precioFinalCopia + $precioMoto;
             $this->setPrecioFinal($precioFinalCopia);
         }
     }
